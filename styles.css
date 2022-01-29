@@ -1,4 +1,12 @@
+/* CSS Variables */
+:root {
+    --enemyHp : 15%;
+    --playerHP : 15%;
+}
+
+
 /* General Styles */
+
 
 body{
     height: 90vh;
@@ -75,6 +83,7 @@ body{
 }
 
 .btn {
+    text-align: center;
     margin: auto;
     height: 25%;
     width: 17%;
@@ -147,15 +156,17 @@ body{
 }
 
 #player-hp {
+    border: 1px solid green;
     margin: 10px 10px ;
-    width: 15%;
+    width: var(--playerHP);
     height: 50%;
     background-color: red;
 }
 
 #enemy-hp {
+    border: 1px solid green;
     margin: 10px 10px ;
-    width: 15%;
+    width: var(--enemyHp);
     height: 50%;
     background-color: red;
 }
