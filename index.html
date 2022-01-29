@@ -14,14 +14,34 @@
             <div id="enemy-hp"></div>
         </div>
         <div id="ship-container"> 
-            <div id="player" class="ship"><img src="./assets/player-assets/player-ship-temp.svg" alt="playerShip"></div>
+            <div id="player" class="ship"><img src="./assets/player-assets/player-ship-temp.svg" alt="playerShip"></div> <!--This will need to call a function to choose which sprite to display-->
             <div id="enemy" class="ship"><img src="./assets/enemy-assets/enemy-ship-temp.svg" alt="enemyShip"></div> <!--This will need to call a function to choose which sprite to display-->
         </div>
         <div class="UI-Container">
-            <div id="user-skills"></div>
-            <div id="action-bar"></div>
-            <div id="user-ship-info"></div>
-            <div id="enemy-ship-info"></div>
+            <div id="user-skills">
+                <div class="btn"></div>
+                <div class="btn"></div>
+                <div class="btn"></div>
+            </div>
+            <div id="action-bar">
+                <div class="action-slot"></div>
+                <div class="action-slot"></div>
+                <div class="action-slot"></div>
+                <div class="action-slot"></div>
+                <div class="action-slot"></div>
+            </div>
+            <div id="user-ship-info">
+                <div id="user-laser" class="item"></div>
+                <div id="user-projectile" class="item"></div>
+                <div id="user-thruster" class="item"></div>
+                <div id="user-shields" class="item"></div>
+            </div>
+            <div id="enemy-ship-info">
+                <div id="enemy-laser" class="item"></div>
+                <div id="enemy-projectile" class="item"></div>
+                <div id="enemy-thruster" class="item"></div>
+                <div id="enemy-shields" class="item"></div>
+            </div>
         </div>
     </div>
 

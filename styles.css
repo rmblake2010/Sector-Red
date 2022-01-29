@@ -1,3 +1,5 @@
+/* General Styles */
+
 body{
     height: 90vh;
     width: 95vw;
@@ -24,6 +26,8 @@ body{
   }
 
 
+/* Player and AI Styles */
+
 #ship-container {
     display: flex;
     justify-content: space-around;
@@ -32,8 +36,6 @@ body{
     height: 20vh;
     width: 100%;
 }
-
-
 
 .ship {
     height: 10%;
@@ -48,6 +50,8 @@ body{
     margin-left: 28rem;
 }
 
+/* General UI Styles !*/
+
 .UI-Container {
     display: flex; 
     flex-wrap: wrap;
@@ -59,36 +63,80 @@ body{
     width: 100%;
 }
 
+/*User skills UI (including buttons) */
 #user-skills {
+    display: flex;
+    justify-content: space-around;
     margin: .5rem;
     height: 90%;
     min-width: 25%;
     border: solid 1px green;
+    background-color: steelblue;
 }
 
+.btn {
+    margin: auto;
+    height: 25%;
+    width: 17%;
+    border: 1px solid red;
+    border-radius: 25px;
+    box-shadow: 5px 2px 4px  red;
+}
+
+
+
+
+
 #action-bar {
+    display: flex;
+    justify-content: space-evenly;
     margin: .5rem; 
     height: 15%;
     max-width: 40%;
     border: 1px solid green;
+    background-color: steelblue;    
 }
 
-#user-ship-info {
+.action-slot {
+    margin: auto;
+    height: 75%;
+    width: 15%;
+    border: 1px solid red;
+    background-color: royalblue;
+}
 
+
+/* User & enemy details styling */
+
+#user-ship-info {
+    display: flex;
+    justify-content: space-around;
     margin: .5rem;
     min-height: 65%;
     width: 40%;
     border: 1px solid green;
+    background-color: royalblue;
 }
 
 #enemy-ship-info {
+    display: flex;
     margin: .5rem;
     height: 90%;
     min-width: 25%;
     border: solid 1px green;
+    background-color: royalblue;
+}
+
+.item {
+    margin: auto;
+    height: 35%;
+    width: 25%;
+    border: 1px solid red;
+    background-color: sandybrown;
 }
 
 
+/**  Health Container UI! **/
 #health-container {
     display: flex;
     margin: auto;
