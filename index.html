@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>WebGame</title>
+</head>
+<body >
+    <div id="background" class="center">
+        <div id="health-container">
+            <div id="player-hp"></div>
+            <div id="enemy-hp"></div>
+        </div>
+        <div id="ship-container"> 
+            <div id="player" class="ship"><img src="./assets/player-assets/player-ship-temp.svg" alt="playerShip"></div>
+            <div id="enemy" class="ship"><img src="./assets/enemy-assets/enemy-ship-temp.svg" alt="enemyShip"></div> <!--This will need to call a function to choose which sprite to display-->
+        </div>
+        <div class="UI-Container">
+            <div id="user-skills"></div>
+            <div id="action-bar"></div>
+            <div id="user-ship-info"></div>
+            <div id="enemy-ship-info"></div>
+        </div>
+    </div>
+
+
+    <script src="./script.js"></script>
+</body>
+</html>
