@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
+    <script src="./script.js" type="module"></script>
     <title>WebGame</title>
 </head>
 <body >
@@ -14,10 +15,10 @@
             <div id="enemy-hp"></div>
         </div>
         <div id="ship-container"> 
-            <div id="player" class="ship"><img src="./assets/player-assets/player-ship-temp.svg" alt="playerShip"></div> <!--This will need to call a function to choose which sprite to display-->
-            <div id="enemy" class="ship"><img src="./assets/enemy-assets/enemy-ship-temp.svg" alt="enemyShip"></div> <!--This will need to call a function to choose which sprite to display-->
+            <div id="player" class="ship"></div> <!--This will need to call a function to choose which sprite to display-->
+            <div id="enemy" class="ship"></div> <!--This will need to call a function to choose which sprite to display-->
         </div>
-        <div id="battle-button">Fight!</div>
+        <div id="battle-btn" class="btn">Fight!</div>
         <div class="UI-Container">
             <div id="user-skills">
                 <div id="laser-btn" class="btn">Laser</div>
@@ -48,6 +49,6 @@
     </div>
 
 
-    <script src="./script.js"></script>
+    
 </body>
 </html>
