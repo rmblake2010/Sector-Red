@@ -1,10 +1,9 @@
 let enemyHP = 100
 let enemyHpBar = document.getElementById('enemy-hp')
+let backGround = document.querySelector('#background')
+
 
 //practicing manipulating enemy HP
-console.log(enemyHpBar)
-let HP = parseInt(getComputedStyle(enemyHpBar).getPropertyValue('--enemyHp'))
-console.log(HP)
 
 //Config for Buttons
 function configureButtons() {
@@ -17,6 +16,7 @@ function configureButtons() {
 }
 
 function btnDetails(event) {
+    
     switch(event.target.id) {
         case 'laser-btn' :
             laserAttack()
@@ -37,11 +37,40 @@ function btnDetails(event) {
 
 //Button actions
 function laserAttack() {
-
+    let HP = parseInt(getComputedStyle(enemyHpBar).getPropertyValue('--enemyHp'))
+    HP -= 2
+        if(HP <= 0 ) {
+            handleWin()
+        } else {
+            enemyHpBar.style.setProperty("--enemyHp", HP + "%")
+            console.log(HP)
+        }
 }
 
 
 
+//Handling Win/Lose conditions 
+
+function handleWin() {
+    let modal = document.createElement('div')
+    let closeBtn = document.createElement('button')
+    closeBtn.style.position = 'relative';
+    closeBtn.classList.add('center');
+
+    modal.style.position = 'relative';
+    modal.classList.add('center')
+    
+    modal.backgroundColor = 'white';
+
+    
+    modal.append(closeBtn);
+    document.querySelector('#background').append(modal)
+
+    closeBtn.addEventListener('click', async () => {
+        await modal.remove()
+        document.querySelector('#enemy').remove();
+    })
+}
 
 
 //Item Description details
@@ -63,3 +92,10 @@ function removeDetails(event) {
 }
 
 configureButtons()
+
+//Battle Rotation (Complete action between AI and user this function needs to hold all queues for attacks and defenses for a turn)
+
+function battleRotation() {
+    let userEnergy = 5
+    
+}

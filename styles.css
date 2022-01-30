@@ -71,6 +71,20 @@ body{
     width: 100%;
 }
 
+/* Battle Button */
+#battle-button {
+    position: relative;
+    top: 12rem;
+    margin: auto;
+    width: 10%;
+    height: 10%;
+    border: solid 1px green;
+    border-radius: 25%;
+    background-color: grey;
+    text-align: center;
+}
+
+
 /*User skills UI (including buttons) */
 #user-skills {
     display: flex;
