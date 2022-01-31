@@ -6,8 +6,6 @@ const enemyShip = new Ship('./assets/enemy-assets/enemy-ship-temp.svg', 15, 1)
 let enemyHP = 100
 let enemyHpBar = document.getElementById('enemy-hp')
 let backGround = document.querySelector('#background')
-const INITIAL_ENERGY = 5
-let battleEnergy = INITIAL_ENERGY
 let actionUI =  document.querySelectorAll('.action-slot')
 
 
@@ -19,31 +17,15 @@ function configureButtons() {
     for(let i = 0; i < buttons.length; i++) {
         document.getElementById(buttons[i].id).addEventListener('mouseover', addDetails)
         document.getElementById(buttons[i].id).addEventListener('mouseout', removeDetails)
-        document.getElementById(buttons[i].id).addEventListener('click', actionButtons)
+       // document.getElementById(buttons[i].id).addEventListener('click', actionButtons)
     }
 }
 
-/*
-function btnDetails(event) {
 
-
-}
-*/
 
 //Button actions
-function laserAttack(energy, actionBar) {
-    let HP = parseInt(getComputedStyle(enemyHpBar).getPropertyValue('--enemyHp'))
-    HP -= 2
-    const laserCost = 2;
-        if(HP <= 0 ) {
-            handleWin()
-        } else {
-            enemyHpBar.style.setProperty("--enemyHp", HP + "%")
-              
-        }
-    return energy -= 2
-}
 
+/*
 function actionButtons(event) {
     switch(event.target.id) {
         case 'laser-btn' :
@@ -64,9 +46,8 @@ function actionButtons(event) {
         default: 
             break;
     }
-
 }
-
+*/
 
 
 
@@ -91,6 +72,26 @@ function handleWin() {
     })
 }
 
+function handleLose(){
+    let modal = document.createElement('div')
+    let closeBtn = document.createElement('button')
+    closeBtn.style.position = 'relative';
+    closeBtn.classList.add('center');
+
+    modal.style.position = 'relative';
+    modal.classList.add('center')
+    
+    modal.backgroundColor = 'white';
+    modal.append(closeBtn);
+    document.querySelector('#background').append(modal)
+
+    closeBtn.addEventListener('click', async () => {
+        await modal.remove()
+        document.querySelector('#player').remove();
+    })
+}
+
+
 
 //Item Description details
 function addDetails() {
@@ -110,11 +111,45 @@ function removeDetails(event) {
    this.lastChild.remove()
 }
 
-// Function that allows user to queue actions within the energy limit
-function userBattlePrep(energy) {
-    return energy -= 1
 
-}
+// Function that allows user to queue actions within the energy limit
+function actionQueue(player, enemy, damage, enemyAction) {
+           document.querySelector('#laser-btn').addEventListener('click',  () => {
+                if(player.energy != 0){
+                    damage += player.laserAttack()              
+                    player.energy -= 1
+                    console.log("energy " + player.energy)
+                } else {
+                    console.log('out of energy! hit the battle button!~')
+                }
+        })  
+        document.querySelector('#battle-btn').addEventListener('click', async () => {
+            let playerElemHp = document.querySelector('#player-hp')
+            let enemyElemHp = document.querySelector('#enemy-hp')
+           
+           
+           if(enemy.health <= damage){
+                enemyElemHp.style.setProperty('--enemyHp', '0%')
+                handleWin()
+           } else if(player.health <= enemyAction){
+                playerElemHp.style.setProperty('--playerHp', '0%')
+                handleLose()
+           }else {
+                enemy.health -= damage
+                player.health -= enemyAction
+
+                enemyElemHp.style.setProperty('--enemyHp', enemy.health + '%') 
+                await playerElemHp.style.setProperty('--playerHp', player.health + '%')   
+           }
+
+            player.energy = 5
+            damage = 0
+        })
+
+    }
+    
+
+
 
 
 
@@ -125,7 +160,7 @@ function userBattlePrep(energy) {
 
 // Building battle Scene with ship Classes... Testing this for encapsulation
 
-async function battleScene(player, enemy, e) {
+function battleScene(player, enemy) {
     // rendering enemy sprite & player sprite into ship-container
     let playerElement = document.createElement('img')
     let enemyElement = document.createElement('img')
@@ -136,9 +171,12 @@ async function battleScene(player, enemy, e) {
     document.querySelector('#player').append(playerElement)
     document.querySelector('#enemy').append(enemyElement)
 
-    await userBattlePrep(player.energy)
-
-
+    let damage = 0
+    let enemyAction = 0;
+    enemyAction = enemy.battleActions()
+    actionQueue(player, enemy,  damage, enemyAction)
+    
+   
 
 }
 
@@ -147,3 +185,5 @@ async function battleScene(player, enemy, e) {
 
 configureButtons()
 battleScene(playerShip, enemyShip);
+
+

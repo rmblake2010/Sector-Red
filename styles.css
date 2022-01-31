@@ -1,7 +1,7 @@
 /* CSS Variables */
 :root {
     --enemyHp : 15%;
-    --playerHP : 15%;
+    --playerHp : 15%;
 }
 
 
@@ -172,7 +172,7 @@ body{
 #player-hp {
     border: 1px solid green;
     margin: 10px 10px ;
-    width: var(--playerHP);
+    width: var(--playerHp);
     height: 50%;
     background-color: red;
 }
