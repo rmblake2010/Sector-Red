@@ -58,7 +58,7 @@ function handleWin() {
     let modal = document.createElement('div')
     let closeBtn = document.createElement('button')
 
-    winText.innerText = 'The ship is obiliterated by your shots...You hover over the battle sight..'
+    winText.innerText = 'The ship is obiliterated by your shots...You look for anything to scavenge as you hover over the battlesite...'
     winText.style.fontWeight = 'bold'
     winText.classList.add('center')
     modal.append(winText)
@@ -138,10 +138,9 @@ function removeDetails(event) {
 
 
 // Function that allows user to queue actions within the energy limit
-function actionQueue(player, enemy, damage, enemyAction) {
+function actionQueue(player, enemy, damage) {
 
-        
-     
+        //Laser Button Config
            document.querySelector('#laser-btn').addEventListener('click', () => {
                 if(player.energy != 0){
                     damage += player.laserAttack()              
@@ -151,37 +150,56 @@ function actionQueue(player, enemy, damage, enemyAction) {
                 } else {
                     console.log('out of energy! hit the battle button!~')
                 }
-        })  
+        }) 
+
+        //Shield Button Config
+        document.querySelector('#shield-btn').addEventListener('click', async () => {
+            if(player.energy != 0) {
+                await player.activateShield()
+                player.energy -= 1
+                console.log("current shield: " + player.shield)
+                actionStyleUpdate(player.energy)
+            } else {
+                console.log('out of energy! hit the battle button!~')
+            }
+        })
+
+        // Begin Battle- Fight Button config 
         document.querySelector('#battle-btn').addEventListener('click', async () => {
             let playerElemHp = document.querySelector('#player-hp')
             let enemyElemHp = document.querySelector('#enemy-hp')
+            let enemyAction = 0;
+            enemyAction = enemy.battleActions()
            
-           
+    
            if(enemy.health <= damage){
+                enemy.health -= damage
                 enemyElemHp.style.setProperty('--enemyHp', '0%')
                 handleWin()
-           } else if(player.health <= enemyAction){
+           } else if(player.health + player.shield <= enemyAction){
+                player.health -= enemyAction
                 playerElemHp.style.setProperty('--playerHp', '0%')
                 handleLose()
            }else {
                 enemy.health -= damage
-                player.health -= enemyAction
-
+                // this will be a bug once i make an actual AI
+                player.health = handleShield(player.health, player.shield, enemyAction)
+                
                 enemyElemHp.style.setProperty('--enemyHp', enemy.health + '%') 
                 await playerElemHp.style.setProperty('--playerHp', player.health + '%')   
-                await resetAction()
+                resetAction()
            }
-
+            player.shield = shieldUpdate(enemyAction, player)
             player.energy = 5
             damage = 0
+            enemyAction = 0;
+            console.log(player.health)
         })
-
     }
     
 // function that updates the style of the action slot from blue to red
 function actionStyleUpdate(currentEnergy) {
     let actions = document.querySelectorAll('.action-slot')
-    const actionColor = 'rgb(65, 105, 225)'
 
     actions[currentEnergy].style.setProperty('background-color', 'red')
 }
@@ -196,14 +214,25 @@ function resetAction(){
     })
 }
 
+//handles shield when enemy deals damage to player health
+function handleShield(health, shield, enemyAction) {
+    let totalHP = health + shield
 
+    return totalHP - enemyAction
+}
 
+//Updates shield after a completed rotation, checks for negative value
+function shieldUpdate(enemyAttack, player) {
+   let mitigate = player.shield - enemyAttack 
+
+   if(mitigate < 0 || NaN){
+        return 0
+   } else {
+       return mitigate
+   }
+}
 
 //Battle Rotation (Complete action between AI and user this function needs to hold all queues for attacks and defenses for a turn)
-
-
-
-// Building battle Scene with ship Classes... Testing this for encapsulation
 
 function battleScene(player, enemy) {
     // rendering enemy sprite & player sprite into ship-container
@@ -217,16 +246,9 @@ function battleScene(player, enemy) {
     document.querySelector('#enemy').append(enemyElement)
 
     let damage = 0
-    let enemyAction = 0;
-    enemyAction = enemy.battleActions()
-    actionQueue(player, enemy,  damage, enemyAction)
-    
-   
+    actionQueue(player, enemy,  damage)
 
 }
-
-
-
 
 configureButtons()
 battleScene(playerShip, enemyShip);
