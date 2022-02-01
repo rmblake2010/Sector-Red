@@ -9,7 +9,7 @@ let backGround = document.querySelector('#background')
 let actionUI =  document.querySelectorAll('.action-slot')
 
 
-//practicing manipulating enemy HP
+
 
 //Config for Buttons
 function configureButtons() {
@@ -139,10 +139,14 @@ function removeDetails(event) {
 
 // Function that allows user to queue actions within the energy limit
 function actionQueue(player, enemy, damage, enemyAction) {
-           document.querySelector('#laser-btn').addEventListener('click',  () => {
+
+        
+     
+           document.querySelector('#laser-btn').addEventListener('click', () => {
                 if(player.energy != 0){
                     damage += player.laserAttack()              
                     player.energy -= 1
+                    actionStyleUpdate(player.energy)
                     console.log("energy " + player.energy)
                 } else {
                     console.log('out of energy! hit the battle button!~')
@@ -165,6 +169,7 @@ function actionQueue(player, enemy, damage, enemyAction) {
 
                 enemyElemHp.style.setProperty('--enemyHp', enemy.health + '%') 
                 await playerElemHp.style.setProperty('--playerHp', player.health + '%')   
+                await resetAction()
            }
 
             player.energy = 5
@@ -173,8 +178,23 @@ function actionQueue(player, enemy, damage, enemyAction) {
 
     }
     
+// function that updates the style of the action slot from blue to red
+function actionStyleUpdate(currentEnergy) {
+    let actions = document.querySelectorAll('.action-slot')
+    const actionColor = 'rgb(65, 105, 225)'
 
+    actions[currentEnergy].style.setProperty('background-color', 'red')
+}
 
+//Function that resets action bar styles after a completed round (meaning after the fight button has been clicked)
+
+function resetAction(){
+    let actions = document.querySelectorAll('.action-slot')
+
+    actions.forEach((action) => {
+        action.style.setProperty('background-color', 'royalblue')
+    })
+}
 
 
 
