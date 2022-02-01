@@ -54,40 +54,65 @@ function actionButtons(event) {
 //Handling Win/Lose conditions 
 
 function handleWin() {
+    let winText = document.createElement('p')
     let modal = document.createElement('div')
     let closeBtn = document.createElement('button')
+
+    winText.innerText = 'The ship is obiliterated by your shots...You hover over the battle sight..'
+    winText.style.fontWeight = 'bold'
+    winText.classList.add('center')
+    modal.append(winText)
+
     closeBtn.style.position = 'relative';
+    closeBtn.style.left = '25%'
+    closeBtn.innerText = 'Fly on'
     closeBtn.classList.add('center');
 
     modal.style.position = 'relative';
     modal.classList.add('center')
-    
-    modal.backgroundColor = 'white';
+    modal.style.bottom = '40%'
+    modal.style.zIndex = '2'
+
+    modal.style.backgroundColor = 'white';
     modal.append(closeBtn);
     document.querySelector('#background').append(modal)
 
     closeBtn.addEventListener('click', async () => {
         await modal.remove()
         document.querySelector('#enemy').remove();
+        document.querySelector('.UI-Container').classList.add('hide')
+        document.querySelector('#battle-btn').classList.add('hide')
     })
 }
 
 function handleLose(){
+    let loseText = document.createElement('p')
     let modal = document.createElement('div')
     let closeBtn = document.createElement('button')
+
+    loseText.innerText = 'Your ship, now mangled by a flurry of bolts, lies vacant. While you drift into space.'
+    loseText.style.fontWeight = 'bold'
+    loseText.classList.add('center')
+    modal.append(loseText)
+
     closeBtn.style.position = 'relative';
+    closeBtn.style.left = '25%'
+    closeBtn.innerText = 'Game Over'
     closeBtn.classList.add('center');
 
     modal.style.position = 'relative';
     modal.classList.add('center')
-    
-    modal.backgroundColor = 'white';
+    modal.style.bottom = '40%'
+    modal.style.zIndex = '2'
+
+    modal.style.backgroundColor = 'white';
     modal.append(closeBtn);
     document.querySelector('#background').append(modal)
-
     closeBtn.addEventListener('click', async () => {
         await modal.remove()
         document.querySelector('#player').remove();
+        document.querySelector('.UI-Container').classList.add('hide')
+        document.querySelector('#battle-btn').classList.add('hide')
     })
 }
 

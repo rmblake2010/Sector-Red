@@ -33,6 +33,9 @@ body{
     padding: 10px;
   }
 
+  .hide {
+    opacity: 0;
+  }
 
 /* Player and AI Styles */
 
