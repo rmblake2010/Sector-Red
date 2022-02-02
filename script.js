@@ -21,8 +21,6 @@ function configureButtons() {
     }
 }
 
-
-
 //Button actions
 
 /*
@@ -58,7 +56,7 @@ function handleWin() {
     let modal = document.createElement('div')
     let closeBtn = document.createElement('button')
 
-    winText.innerText = 'The ship is obiliterated by your shots...You look for anything to scavenge as you hover over the battlesite...'
+    winText.innerText = 'The ship is obiliterated by your shots...You look for anything to scavenge as you hover over the battle site...'
     winText.style.fontWeight = 'bold'
     winText.classList.add('center')
     modal.append(winText)
@@ -116,8 +114,6 @@ function handleLose(){
     })
 }
 
-
-
 //Item Description details
 function addDetails() {
     let details = document.createElement('div')
@@ -157,8 +153,19 @@ function actionQueue(player, enemy, damage) {
             if(player.energy != 0) {
                 await player.activateShield()
                 player.energy -= 1
-                console.log("current shield: " + player.shield)
                 actionStyleUpdate(player.energy)
+            } else {
+                console.log('out of energy! hit the battle button!~')
+            }
+        })
+
+        document.querySelector('#projectile-btn').addEventListener('click', () => {
+            if(player.energy != 0 && player.energy > 1) {
+                let cost = 1;
+                damage += player.projectileAttack()
+                player.energy -= 2
+                actionStyleUpdate(player.energy, cost)
+                console.log("energy: " + player.energy)
             } else {
                 console.log('out of energy! hit the battle button!~')
             }
@@ -170,6 +177,7 @@ function actionQueue(player, enemy, damage) {
             let enemyElemHp = document.querySelector('#enemy-hp')
             let enemyAction = 0;
             enemyAction = enemy.battleActions()
+            
            
     
            if(enemy.health <= damage){
@@ -177,6 +185,7 @@ function actionQueue(player, enemy, damage) {
                 enemyElemHp.style.setProperty('--enemyHp', '0%')
                 handleWin()
            } else if(player.health + player.shield <= enemyAction){
+               //health number is not exactly right because it does not take into account the players shield
                 player.health -= enemyAction
                 playerElemHp.style.setProperty('--playerHp', '0%')
                 handleLose()
@@ -193,15 +202,25 @@ function actionQueue(player, enemy, damage) {
             player.energy = 5
             damage = 0
             enemyAction = 0;
-            console.log(player.health)
+    
         })
     }
     
 // function that updates the style of the action slot from blue to red
-function actionStyleUpdate(currentEnergy) {
+function actionStyleUpdate(currentEnergy, cost) {
     let actions = document.querySelectorAll('.action-slot')
+    
+    if(cost === 1){
+        switch(cost){
+            case 1: actions[currentEnergy + 1].style.setProperty('background-color', 'red')
+                    actions[currentEnergy].style.setProperty('background-color', 'red')
+                    console.log('imhere!')
+                    break;
 
-    actions[currentEnergy].style.setProperty('background-color', 'red')
+        }
+    }else {
+        actions[currentEnergy].style.setProperty('background-color', 'red')
+    }
 }
 
 //Function that resets action bar styles after a completed round (meaning after the fight button has been clicked)
