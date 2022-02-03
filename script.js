@@ -135,12 +135,13 @@ function removeDetails(event) {
 
 // Function that allows user to queue actions within the energy limit
 function actionQueue(player, enemy, damage) {
-
+    let battleActions = [];
+    let enemyActions = [];
         //Laser Button Config
            document.querySelector('#laser-btn').addEventListener('click', () => {
-                if(player.energy != 0){
-                    damage += player.laserAttack()              
+                if(player.energy != 0){                             
                     player.energy -= 1
+                    battleActions.push({damage: player.laserAttack(), energy: 1})
                     actionStyleUpdate(player.energy)
                     console.log("energy " + player.energy)
                 } else {
@@ -159,11 +160,24 @@ function actionQueue(player, enemy, damage) {
             }
         })
 
+        //Thruster Button config
+        document.querySelector('#thruster-btn').addEventListener('click', () => {
+            if(player.energy != 0) {
+                player.activateThrusters()
+                player.energy -= 1
+                console.log("player speed: " + player.speed)
+                actionStyleUpdate(player.energy)
+            }else {
+                console.log('out of energy! hit the battle button!~')
+            }
+        })
+
+        //Projectile Button config
         document.querySelector('#projectile-btn').addEventListener('click', () => {
             if(player.energy != 0 && player.energy > 1) {
-                let cost = 1;
-                damage += player.projectileAttack()
+                let cost = 1;   
                 player.energy -= 2
+                battleActions.push({damage: player.projectileAttack(), energy: 2})
                 actionStyleUpdate(player.energy, cost)
                 console.log("energy: " + player.energy)
             } else {
@@ -175,37 +189,70 @@ function actionQueue(player, enemy, damage) {
         document.querySelector('#battle-btn').addEventListener('click', async () => {
             let playerElemHp = document.querySelector('#player-hp')
             let enemyElemHp = document.querySelector('#enemy-hp')
-            let enemyAction = 0;
-            enemyAction = enemy.battleActions()
+            let enemyDamage = 0
+            enemyActions = enemy.battleActions()
             
-           
+            
+            // Damage that is calculated for evasion (checking for missed shots)
+            handleEvasion(enemy.speed, battleActions)
+                battleActions.forEach((battleAction) => {
+                    damage += battleAction.damage 
+                })
+            console.log("user damage after evasion: " + damage)
+         
+
+            handleEvasion(player.speed, enemyActions)
+            enemyActions.forEach((enemyAction) => {
+                enemyDamage += enemyAction.damage
+            })
+        
+            console.log("enemy damage after evasion: " +enemyDamage)
+
+
     
            if(enemy.health <= damage){
                 enemy.health -= damage
                 enemyElemHp.style.setProperty('--enemyHp', '0%')
                 handleWin()
-           } else if(player.health + player.shield <= enemyAction){
+           } else if(player.health + player.shield <= enemyDamage){
                //health number is not exactly right because it does not take into account the players shield
-                player.health -= enemyAction
+                player.health -= enemyDamage
                 playerElemHp.style.setProperty('--playerHp', '0%')
                 handleLose()
            }else {
+
+  
                 enemy.health -= damage
+
                 // this will be a bug once i make an actual AI
-                player.health = handleShield(player.health, player.shield, enemyAction)
+                player.health = handleShield(player.health, player.shield, enemyDamage)
                 
                 enemyElemHp.style.setProperty('--enemyHp', enemy.health + '%') 
                 await playerElemHp.style.setProperty('--playerHp', player.health + '%')   
                 resetAction()
            }
-            player.shield = shieldUpdate(enemyAction, player)
+            player.shield = shieldUpdate(enemyDamage, player)
+            player.speed = 1;
             player.energy = 5
+            enemy.energy = 5
             damage = 0
-            enemyAction = 0;
+            enemyDamage = 0;
+            battleActions = [];
     
         })
     }
     
+//Function that handles evasion (hit or miss chance w/ shots)
+function handleEvasion(speed, battleActions) {
+
+    battleActions.forEach((battleAction) => {
+        let roll = Math.floor(Math.random() * 10) + 1
+        if(roll <= speed){                 
+            battleAction.damage = 0
+        }
+    }) 
+}
+
 // function that updates the style of the action slot from blue to red
 function actionStyleUpdate(currentEnergy, cost) {
     let actions = document.querySelectorAll('.action-slot')
@@ -214,9 +261,10 @@ function actionStyleUpdate(currentEnergy, cost) {
         switch(cost){
             case 1: actions[currentEnergy + 1].style.setProperty('background-color', 'red')
                     actions[currentEnergy].style.setProperty('background-color', 'red')
-                    console.log('imhere!')
+                    
                     break;
-
+            default :
+                break;
         }
     }else {
         actions[currentEnergy].style.setProperty('background-color', 'red')

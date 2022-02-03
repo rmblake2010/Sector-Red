@@ -19,18 +19,21 @@ export default class Ship {
         this.shield += 2
     }
 
+    activateThrusters() {
+        this.speed += 2
+    }
+
     projectileAttack() {
         return PROJECTILE_DAMAGE
     }
 
     // for AI actions and possibly friendly AI actions
     battleActions() {
-        let damage = 0;
+        let actions = []
         while(this.energy != 0) {
-            damage += this.laserAttack()
-            this.energy -= 1
+            actions.push({damage: this.laserAttack(), energy: 1})
+            this.energy -= 1         
         }
-        this.energy = 5
-        return damage
+        return actions
     }
 }
