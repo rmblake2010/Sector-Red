@@ -1,7 +1,7 @@
 import Ship from './Ship.js'
 
-const playerShip = new Ship('./assets/player-assets/player-ship-temp.svg', 15, 1)
-const enemyShip = new Ship('./assets/enemy-assets/enemy-ship-temp.svg', 15, 1)
+const playerShip = new Ship('./assets/player-assets/ShipSprite.svg', 15, 1)
+const enemyShip = new Ship('./assets/enemy-assets/enemySprite.svg', 15, 1)
 
 let enemyHP = 100
 let enemyHpBar = document.getElementById('enemy-hp')

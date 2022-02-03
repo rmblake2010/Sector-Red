@@ -54,11 +54,11 @@ body{
     height: 10%;
     width: 10%;
 }
-
+/*
 #player {
     transform: rotate(90deg);
 }
-
+*/
 #enemy {
     margin-left: 28rem;
 }
