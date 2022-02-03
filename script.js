@@ -3,7 +3,14 @@ import Ship from './Ship.js'
 const playerShip = new Ship('./assets/player-assets/ShipSprite.svg', 15, 1)
 const enemyShip = new Ship('./assets/enemy-assets/enemySprite.svg', 15, 1)
 
-let enemyHP = 100
+const bgMusic = new Audio('./assets/sound/bump_2.mp3')
+bgMusic.loop = true
+/*
+document.querySelector('#background').addEventListener('click', () => {
+    bgMusic.play()
+})
+*/
+
 let enemyHpBar = document.getElementById('enemy-hp')
 let backGround = document.querySelector('#background')
 let actionUI =  document.querySelectorAll('.action-slot')
@@ -259,15 +266,15 @@ function actionStyleUpdate(currentEnergy, cost) {
     
     if(cost === 1){
         switch(cost){
-            case 1: actions[currentEnergy + 1].style.setProperty('background-color', 'red')
-                    actions[currentEnergy].style.setProperty('background-color', 'red')
+            case 1: actions[currentEnergy + 1].style.backgroundImage = 'url(./assets/UI/batterySlotSpent.svg)'
+                    actions[currentEnergy].style.backgroundImage = 'url(./assets/UI/batterySlotSpent.svg)'
                     
                     break;
             default :
                 break;
         }
     }else {
-        actions[currentEnergy].style.setProperty('background-color', 'red')
+        actions[currentEnergy].style.backgroundImage = 'url(./assets/UI/batterySlotSpent.svg)'
     }
 }
 
@@ -277,7 +284,7 @@ function resetAction(){
     let actions = document.querySelectorAll('.action-slot')
 
     actions.forEach((action) => {
-        action.style.setProperty('background-color', 'royalblue')
+        action.style.backgroundImage = 'url(./assets/UI/batterySlot.svg)'
     })
 }
 

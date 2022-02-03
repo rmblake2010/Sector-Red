@@ -2,8 +2,8 @@
 :root {
     --enemyHp : 15%;
     --playerHp : 15%;
-    --actionDepeleted : red;
-    --actionAvailable : royalblue;
+    --actionDepleted : url('./assets/UI/batterySlotSpent.svg');
+    --actionAvailable : url("./assets/UI/batterySlot.svg");
 }
 
 
@@ -106,12 +106,24 @@ body{
     margin: auto;
     height: 25%;
     width: 17%;
-    border: 1px solid red;
-    border-radius: 25px;
-    box-shadow: 5px 2px 4px  red;
+
 }
 
+#laser-btn {
+    background-image: url('./assets/UI/laserButton.svg');
+}
 
+#projectile-btn {
+    background-image: url('./assets/UI/projectileButton.svg');
+}
+
+#shield-btn {
+    background-image: url('./assets/UI/shieldButton.svg');
+}
+
+#thruster-btn {
+    background-image: url('./assets/UI/thrusterButton.svg');
+}
 
 
 
@@ -129,8 +141,8 @@ body{
     margin: auto;
     height: 75%;
     width: 15%;
-    border: 1px solid red;
-    background-color: var(--actionAvailable);
+    background-image: var(--actionAvailable);
+    
 }
 
 
