@@ -104,13 +104,16 @@ body{
 .btn {
     text-align: center;
     margin: auto;
-    height: 25%;
+    height: 30%;
     width: 17%;
+    background-size: cover;
+    background-repeat: no-repeat;
 
 }
 
 #laser-btn {
     background-image: url('./assets/UI/laserButton.svg');
+
 }
 
 #projectile-btn {
@@ -141,6 +144,8 @@ body{
     margin: auto;
     height: 75%;
     width: 15%;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-image: var(--actionAvailable);
     
 }
@@ -200,4 +205,18 @@ body{
     width: var(--enemyHp);
     height: 50%;
     background-color: red;
+}
+
+.hitAnimation {
+    animation: hitAnimation 2s forwards;
+}
+
+
+/* Animations */
+@keyframes hitAnimation {
+    0% {filter: grayscale(1);}
+    25% {opacity: 0;}
+    50% {opacity: 1;}
+    75% {opacity: 0;}
+    75% {filter: grayscale(0); opacity: 1;}
 }

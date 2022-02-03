@@ -139,6 +139,11 @@ function removeDetails(event) {
    this.lastChild.remove()
 }
 
+function sleep(time){
+    setTimeout(() => {
+        return
+    }, time)
+}
 
 // Function that allows user to queue actions within the energy limit
 function actionQueue(player, enemy, damage) {
@@ -227,16 +232,19 @@ function actionQueue(player, enemy, damage) {
                 playerElemHp.style.setProperty('--playerHp', '0%')
                 handleLose()
            }else {
-
   
-                enemy.health -= damage
+            
+            enemy.health -= damage
 
-                // this will be a bug once i make an actual AI
-                player.health = handleShield(player.health, player.shield, enemyDamage)
-                
-                enemyElemHp.style.setProperty('--enemyHp', enemy.health + '%') 
-                await playerElemHp.style.setProperty('--playerHp', player.health + '%')   
-                resetAction()
+
+            // this will be a bug once i make an actual AI
+            player.health = handleShield(player.health, player.shield, enemyDamage)
+            
+
+            enemyElemHp.style.setProperty('--enemyHp', enemy.health + '%') 
+            await playerElemHp.style.setProperty('--playerHp', player.health + '%')   
+            resetAction()
+
            }
             player.shield = shieldUpdate(enemyDamage, player)
             player.speed = 1;
@@ -248,6 +256,10 @@ function actionQueue(player, enemy, damage) {
     
         })
     }
+
+// hit animation
+
+
     
 //Function that handles evasion (hit or miss chance w/ shots)
 function handleEvasion(speed, battleActions) {
