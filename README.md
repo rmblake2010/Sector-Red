@@ -18,16 +18,16 @@ Goals for this project:
 
 
 1/29/22 :
--Completed what seemed like an okay lay out.
+- Completed what seemed like an okay lay out.
 
 This layout includes:
 
 
--Player and Enemy HP;
--Backkground;
--Spaceship imgs;
--Container for skills, energy bar, and items
--Began working on button functionanility 
+- Player and Enemy HP;
+- Backkground;
+- Spaceship imgs;
+- Container for skills, energy bar, and items
+- Began working on button functionanility 
 
 ![prototype-1](https://user-images.githubusercontent.com/4401398/152903113-666cabee-427b-4da1-aead-ac1bf1799888.png)
 
