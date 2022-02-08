@@ -153,6 +153,13 @@ I made these batterys to display how many actions the player has left:
 
 
 ____________________________
+2/7/22 :
+
+I decided to scrap the idea for items right now because i did not feel like i would have time to complete for the MVP.
+I wanted the MVP to be as "complete" as possible so some html elements were removed temporarily
+
+![prototype-3](https://user-images.githubusercontent.com/4401398/152905848-f66552cd-9f6c-4adc-b4ae-b493ea2c77bd.png)
+
 
 Future Progress:
 
