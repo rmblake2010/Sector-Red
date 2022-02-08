@@ -33,6 +33,7 @@ This layout includes:
 
 Button functionanility: 
 _____________________________
+```
 function configureButtons() {
     let buttons = document.querySelectorAll('.btn')
     for(let i = 0; i < buttons.length; i++) {
@@ -60,6 +61,7 @@ function btnDetails(event) {
             break;
     }
 }
+```
 ___________________________________________
 My goal was to configure the buttons on load, with each button being assigned to a specific function.
 This method did not work and was not used.
@@ -73,6 +75,7 @@ Made a ship class to store information such as:
 - damage
 
 _____________________________________________________________________________________________________________________
+```
 export default class Ship {
     constructor(url, health, speed) {
         this.url = url
@@ -108,6 +111,7 @@ export default class Ship {
         return actions
     }
 }
+```
  __________________________________________________________________________________________
  
  ** I chose to make activating or using weapons or shields/thrusters a function because later on i would like to add items to effect the return values.
@@ -121,6 +125,8 @@ A win/lose condition was finished as well as the "battle button"
 
 
 1/31/22-2/2/22 :
+
+
 Properly configured all attack buttons
 added custom background and sprites for styling and pizazz!
 
