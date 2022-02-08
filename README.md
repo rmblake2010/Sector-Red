@@ -130,19 +130,29 @@ A win/lose condition was finished as well as the "battle button"
 Properly configured all attack buttons
 added custom background and sprites for styling and pizazz!
 
-Background :
+- Background :
 ![backGround](https://user-images.githubusercontent.com/4401398/152904670-4f77cb8d-de0c-4967-a8b6-1f397bbb66e6.png)
 
-enemy sprite : 
+- enemy sprite : 
 ![enemySprite](https://user-images.githubusercontent.com/4401398/152904685-e47be2bb-00e4-4040-bd66-f163b73c5037.svg)
-player sprite: 
+- player sprite: 
 ![ShipSprite](https://user-images.githubusercontent.com/4401398/152904697-7fca1b3b-1d76-4272-b215-9abc0e0f8fd9.svg)
 
 
 Added button styles, My goal for was as little text on the screen as possible.
+- laser button : ![laserButton](https://user-images.githubusercontent.com/4401398/152904937-88a55ea9-bf60-4dc1-84ad-aa77b1584734.svg)
+- shield button : ![shieldButton](https://user-images.githubusercontent.com/4401398/152904956-5adbe67f-5c8f-46a3-bcfc-32ee19e43fbb.svg)
+- projectile button : ![projectileButton](https://user-images.githubusercontent.com/4401398/152904967-334fea7a-fdaa-4525-b385-845e3dd105d0.svg)
+- thruster button : ![thrusterButton](https://user-images.githubusercontent.com/4401398/152905033-093f7ed9-06b7-4db7-a23d-aa0f172a84d4.svg)
+_______
+I also wanted each turn to be limited, so a player couldnt just press a button a lot of times and win. However, i wanted to display this limitation visually.
+I made these batterys to display how many actions the player has left:
+- Battery : ![batterySlot](https://user-images.githubusercontent.com/4401398/152905153-f1b09f2e-0f01-4628-83b5-fbfd9f8f8257.svg)
+- Battery when action is depleted: ![batterySlotSpent](https://user-images.githubusercontent.com/4401398/152905165-8831568a-9f6f-4a89-91e7-e929bcbe0fee.svg)
 
 
 
+____________________________
 
 Future Progress:
 
