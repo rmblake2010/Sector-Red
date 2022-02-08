@@ -130,6 +130,14 @@ A win/lose condition was finished as well as the "battle button"
 Properly configured all attack buttons
 added custom background and sprites for styling and pizazz!
 
+Background :
+![backGround](https://user-images.githubusercontent.com/4401398/152904670-4f77cb8d-de0c-4967-a8b6-1f397bbb66e6.png)
+
+enemy sprite : 
+![enemySprite](https://user-images.githubusercontent.com/4401398/152904685-e47be2bb-00e4-4040-bd66-f163b73c5037.svg)
+player sprite: 
+![ShipSprite](https://user-images.githubusercontent.com/4401398/152904697-7fca1b3b-1d76-4272-b215-9abc0e0f8fd9.svg)
+
 
 Future Progress:
 
