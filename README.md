@@ -139,6 +139,11 @@ player sprite:
 ![ShipSprite](https://user-images.githubusercontent.com/4401398/152904697-7fca1b3b-1d76-4272-b215-9abc0e0f8fd9.svg)
 
 
+Added button styles, My goal for was as little text on the screen as possible.
+
+
+
+
 Future Progress:
 
 Next for things to do i would like to:
