@@ -22,6 +22,7 @@ Goals for this project:
 
 This layout includes:
 
+
 -Player and Enemy HP;
 -Backkground;
 -Spaceship imgs;
@@ -63,6 +64,76 @@ ___________________________________________
 My goal was to configure the buttons on load, with each button being assigned to a specific function.
 This method did not work and was not used.
 
+1/30/22 : 
 
+Made a ship class to store information such as:
+- energy
+- health
+- speed
+- damage
+
+_____________________________________________________________________________________________________________________
+export default class Ship {
+    constructor(url, health, speed) {
+        this.url = url
+        this.health = health
+        this.speed = speed
+        this.energy = 5
+        this.shield = 0;
+    }
+
+    laserAttack() {
+        return LASER_DAMAGE
+    }
+
+    activateShield() {
+        this.shield += 2
+    }
+
+    activateThrusters() {
+        this.speed += 2
+    }
+
+    projectileAttack() {
+        return PROJECTILE_DAMAGE
+    }
+
+    // for AI actions and possibly friendly AI actions
+    battleActions() {
+        let actions = []
+        while(this.energy != 0) {
+            actions.push({damage: this.laserAttack(), energy: 1})
+            this.energy -= 1         
+        }
+        return actions
+    }
+}
+ __________________________________________________________________________________________
+ 
+ ** I chose to make activating or using weapons or shields/thrusters a function because later on i would like to add items to effect the return values.
+ I feel like this will be much easier with simple functions already in place.
+ 
   
+  
+** This worked really well and sped along my progress!
+A win/lose condition was finished as well as the "battle button"
+![prototype-2](https://user-images.githubusercontent.com/4401398/152903803-5db19af0-8d3a-4e57-b356-839dceb57b1e.png)
+
+
+1/31/22-2/2/22 :
+Properly configured all attack buttons
+added custom background and sprites for styling and pizazz!
+
+
+Future Progress:
+
+Next for things to do i would like to:
+- add animations
+- sound effects
+- more music
+- add items
+
+
+
+
 
