@@ -160,7 +160,7 @@ I wanted the MVP to be as "complete" as possible so some html elements were remo
 
 ![prototype-3](https://user-images.githubusercontent.com/4401398/152905848-f66552cd-9f6c-4adc-b4ae-b493ea2c77bd.png)
 
-
+_____________________________________
 Future Progress:
 
 Next for things to do i would like to:
