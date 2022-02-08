@@ -54,6 +54,15 @@ function actionButtons(event) {
 }
 */
 
+//function for grayscale change on battle-button
+function grayscaleChange(energy) {
+    if(energy <= 1){ 
+        document.querySelector('#battle-btn').style.filter = "grayscale(0)"
+    }else {
+        document.querySelector('#battle-btn').style.filter = "grayscale(1)"
+    }
+}
+
 
 
 //Handling Win/Lose conditions 
@@ -71,6 +80,7 @@ function handleWin() {
     closeBtn.style.position = 'relative';
     closeBtn.style.left = '25%'
     closeBtn.innerText = 'Fly on'
+
     closeBtn.classList.add('center');
 
     modal.style.position = 'relative';
@@ -78,7 +88,7 @@ function handleWin() {
     modal.style.bottom = '40%'
     modal.style.zIndex = '2'
 
-    modal.style.backgroundColor = 'white';
+    modal.style.backgroundColor = 'rgb(164,56,56)';
     modal.append(closeBtn);
     document.querySelector('#background').append(modal)
 
@@ -110,7 +120,7 @@ function handleLose() {
     modal.style.bottom = '40%'
     modal.style.zIndex = '2'
 
-    modal.style.backgroundColor = 'white';
+    modal.style.backgroundColor = 'rgb(164,56,56)';
     modal.append(closeBtn);
     document.querySelector('#background').append(modal)
     closeBtn.addEventListener('click', async () => {
@@ -122,28 +132,51 @@ function handleLose() {
 }
 
 //Item Description details
-function addDetails() {
+function addDetails(event) {
+    let targetDetails = event.target.id
     let details = document.createElement('div')
     details.style.position = 'relative';
-    details.style.width = '6em';
+    details.style.width = '10em';
     details.style.height = '7em';
     details.style.bottom = '8em';
     details.style.left = '0em';
-    details.style.border = 'solid', '1px', 'blue';
-    details.style.backgroundColor = 'white'
-    details.style.zIndex = '2'
-    this.append(details)
+    details.style.color = "white"
+    details.style.border = 'solid', '1px', 'green';
+    details.style.backgroundColor = 'rgb(31,37,69)'
+    details.style.zIndex = '3'
+    details.innerText = buttonDescriptionDetails(targetDetails)
+    document.getElementById('background').append(details)
 }
-
+// removings details from screen
 function removeDetails(event) {
-    this.lastChild.remove()
+    document.querySelector('#background').lastChild.remove()
 }
 
-function sleep(time) {
-    setTimeout(() => {
-        return
-    }, time)
+//function that determines mouse over details
+function buttonDescriptionDetails(targetDetails) {
+    switch(targetDetails) {
+        case 'laser-btn' :
+            return "Laser attack:\nDamage: 2\nEnergy cost: 1"
+            break;
+        case 'projectile-btn' :
+            return "Missiles:\nDamage: 4\nEnergy cost: 2"
+            break;
+        case 'shield-btn' :
+            return "Shields:\nMitigate 2 Damage\nEnergy cost: 1"
+            break;
+        case 'thruster-btn' :
+            return "Thrusters:\nReduces chance to be hit by 10%\n Energy cost: 2"
+            break;
+        case 'battle-btn' :
+            return "Attack!"
+            break;
+        default: 
+            break;
+    }
 }
+
+
+
 
 // Function that allows user to queue actions within the energy limit
 function actionQueue(player, enemy, damage) {
@@ -155,6 +188,7 @@ function actionQueue(player, enemy, damage) {
             player.energy -= 1
             battleActions.push({ damage: player.laserAttack(), energy: 1 })
             actionStyleUpdate(player.energy)
+            grayscaleChange(player.energy)
             console.log("energy " + player.energy)
         } else {
             console.log('out of energy! hit the battle button!~')
@@ -166,6 +200,7 @@ function actionQueue(player, enemy, damage) {
         if (player.energy != 0) {
             await player.activateShield()
             player.energy -= 1
+            grayscaleChange(player.energy)
             actionStyleUpdate(player.energy)
         } else {
             console.log('out of energy! hit the battle button!~')
@@ -174,11 +209,13 @@ function actionQueue(player, enemy, damage) {
 
     //Thruster Button config
     document.querySelector('#thruster-btn').addEventListener('click', () => {
-        if (player.energy != 0) {
+        if (player.energy != 0 && player.energy > 1) {
+            let cost = 1 
             player.activateThrusters()
-            player.energy -= 1
+            player.energy -= 2
             console.log("player speed: " + player.speed)
-            actionStyleUpdate(player.energy)
+            grayscaleChange(player.energy)
+            actionStyleUpdate(player.energy, cost)
         } else {
             console.log('out of energy! hit the battle button!~')
         }
@@ -191,6 +228,7 @@ function actionQueue(player, enemy, damage) {
             player.energy -= 2
             battleActions.push({ damage: player.projectileAttack(), energy: 2 })
             actionStyleUpdate(player.energy, cost)
+            grayscaleChange(player.energy)
             console.log("energy: " + player.energy)
         } else {
             console.log('out of energy! hit the battle button!~')
@@ -257,6 +295,7 @@ function actionQueue(player, enemy, damage) {
         player.speed = 1;
         player.energy = 5
         enemy.energy = 5
+        grayscaleChange(player.energy)
         damage = 0
         enemyDamage = 0;
         battleActions = [];
