@@ -19,7 +19,9 @@ Goals for this project:
 
 2/5/22 :
 -Completed what seemed like an okay lay out.
+
 This layout includes:
+
 -Player and Enemy HP;
 -Backkground;
 -Spaceship imgs;
