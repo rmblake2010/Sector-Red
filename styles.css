@@ -20,7 +20,7 @@ body{
 
 #background {
 
-    background-image: url('./assets/background/background-Splash.gif') /*img credit: https://menperiodismopolitico.blogspot.com/2021/01/twinkling-star-pixel-art-are-you.html  */;
+    background-image: url('./assets/background/backGround.png');
     background-size: cover;
     height: 80vh;
     width: 70vw;
