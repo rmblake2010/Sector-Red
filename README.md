@@ -280,6 +280,8 @@ For the ship class i decided to add a variable called speed. Each ship would hav
 ```
 __________________________________________________________________________
 - Handling Evasion 
+
+
 Handling evasion made me rethink how i managed taking in the damage variable...How could i check if something missed if it was all incremented in one variable?
 
 My solution, arrays. Arrays of objects to be specific
@@ -291,12 +293,13 @@ My solution, arrays. Arrays of objects to be specific
 not only this let me store damage in a specific instances, but if i made it into an object i could add specific things to that instance, such as energy, or even an id for different items! I think this change will help me a lot when im developing the game further.
 
 - handleEvasion(speed, battleActions)
+
 what i decided to do was to make a RNG function that rolled between 1 - 10. if the roll is less that or equal to the speed the damage of the specific battleaction would be changed to 0
 
 Ex.  
 Ships have a base speed of 1. So at minimum there is a 10% chance that a roll will equal 1. This is then incremented with the thruster button, hopefully making a mathematically sound system 
 
-``
+```
 function handleEvasion(speed, battleActions) {
 
     battleActions.forEach((battleAction) => {
@@ -306,7 +309,7 @@ function handleEvasion(speed, battleActions) {
         }
     })
 }
-``
+```
 
 - Calling handleEvasion
 
