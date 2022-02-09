@@ -127,7 +127,268 @@ A win/lose condition was finished as well as the "battle button"
 1/31/22-2/2/22 :
 
 
-Properly configured all attack buttons
+Properly configured all attack buttons 
+
+
+<b> Button configuration </b>
+___________________________________________
+- Laser Button
+
+With the laser attack i knew i needed to manipulate a style to adjust a health bar visually. I used this value to test if the health points (HP) was less that or <= 0.
+
+This method was quickly changed because it adjusted the health points of the enemy when the laserAttack() function was called, which is not what i wanted.
+```
+//Button actions
+function laserAttack() {
+    let HP = parseInt(getComputedStyle(enemyHpBar).getPropertyValue('--enemyHp'))
+    HP -= 2
+        if(HP <= 0 ) {
+            handleWin()
+        } else {
+            enemyHpBar.style.setProperty("--enemyHp", HP + "%")
+            console.log(HP)
+        }
+}
+
+
+
+//Handling Win/Lose conditions 
+
+function handleWin() {
+    let modal = document.createElement('div')
+    let closeBtn = document.createElement('button')
+    closeBtn.style.position = 'relative';
+    closeBtn.classList.add('center');
+
+    modal.style.position = 'relative';
+    modal.classList.add('center')
+    
+    modal.backgroundColor = 'white';
+
+    
+    modal.append(closeBtn);
+    document.querySelector('#background').append(modal)
+
+    closeBtn.addEventListener('click', async () => {
+        await modal.remove()
+        document.querySelector('#enemy').remove();
+    })
+}
+
+```
+I ended up changing the configuration of all buttons into a function called action queue, which took two ship classes, and damage
+
+- Updated laser button 
+
+This updated button configuration checked the players energy, added a totaling variable called damage based off of the players laser attack, and updated the energy styles on  the DOM.
+
+This later became a problem with damage being a totalling variable, but this will be discussed in the thruster button configuration.
+```
+        //Laser Button Config
+           document.querySelector('#laser-btn').addEventListener('click', () => {
+                if(player.energy != 0){
+                    damage += player.laserAttack()              
+                    player.energy -= 1
+                    actionStyleUpdate(player.energy)
+                    console.log("energy " + player.energy)
+                } else {
+                   // console.log('out of energy! hit the battle button!~')
+                }
+        }) 
+
+```
+_________________________________________
+- Shield Button
+
+the shield button was not to difficult to configure, however the problem lied in when damage was calculated at the end of a turn.
+Adding the player health and the shield together did not always return what was wanted and i had to make the decision if the shield would be lost each turn or not.
+
+```       
+
+        document.querySelector('#shield-btn').addEventListener('click', async () => {
+            if(player.energy != 0) {
+                await player.activateShield()
+                player.energy -= 1
+                console.log("current shield: " + player.shield)
+                actionStyleUpdate(player.energy)
+            } else {
+               // console.log('out of energy! hit the battle button!~')
+            }
+        }) 
+```
+___________________________________________
+
+- Projectile Button
+
+The projectile button made me rethink how i would update the action slots. This is because i wanted the projectile attack to cost 2 energy.
+
+to fix this i added a variable called cost, which i was able to pass into actionStyleUpdate.  
+
+```
+        document.querySelector('#projectile-btn').addEventListener('click', () => {
+            if(player.energy != 0 && player.energy > 1) {
+                let cost = 1;
+                damage += player.projectileAttack()
+                player.energy -= 2
+                actionStyleUpdate(player.energy, cost)
+                console.log("energy: " + player.energy)
+            } else {
+               // console.log('out of energy! hit the battle button!~')
+            }
+        })
+```
+
+- actionStyleUpdate()
+
+I chose to use a switch statement in an if statement because my plan was to ultimately have abilties that cost, 3 or even 4 energy. 
+
+```
+function actionStyleUpdate(currentEnergy, cost) {
+    let actions = document.querySelectorAll('.action-slot')
+    
+    if(cost >= 1){
+        switch(cost){
+            case 1: actions[currentEnergy + 1].style.setProperty('background-color', 'red')
+                    actions[currentEnergy].style.setProperty('background-color', 'red')
+                    console.log('imhere!')
+                    break;
+        }
+    }else {
+        actions[currentEnergy].style.setProperty('background-color', 'red')
+    }
+}
+```
+________________________________________________________________________
+- Thruster Button
+
+The thruster button opened a whole new can of worms. I wanted shots to have a chance to miss. So not only do the variables that this button effects increment in some way, but i needed a new function that handled the chance for shots to miss.
+
+For the ship class i decided to add a variable called speed. Each ship would have a base speed of 1 and it could be incremented when using activateThrusters()
+
+```
+        document.querySelector('#thruster-btn').addEventListener('click', () => {
+            if(player.energy != 0) {
+                player.activateThrusters()
+                player.energy -= 1
+                console.log("player speed: " + player.speed)
+                actionStyleUpdate(player.energy)
+            }else {
+                console.log('out of energy! hit the battle button!~')
+            }
+        })
+
+```
+__________________________________________________________________________
+- Handling Evasion 
+Handling evasion made me rethink how i managed taking in the damage variable...How could i check if something missed if it was all incremented in one variable?
+
+My solution, arrays. Arrays of objects to be specific
+```
+    let battleActions = [];
+    let enemyActions = [];
+
+```
+not only this let me store damage in a specific instances, but if i made it into an object i could add specific things to that instance, such as energy, or even an id for different items! I think this change will help me a lot when im developing the game further.
+
+- handleEvasion(speed, battleActions)
+what i decided to do was to make a RNG function that rolled between 1 - 10. if the roll is less that or equal to the speed the damage of the specific battleaction would be changed to 0
+
+Ex.  
+Ships have a base speed of 1. So at minimum there is a 10% chance that a roll will equal 1. This is then incremented with the thruster button, hopefully making a mathematically sound system 
+
+``
+function handleEvasion(speed, battleActions) {
+
+    battleActions.forEach((battleAction) => {
+        let roll = Math.floor(Math.random() * 10) + 1
+        if (roll <= speed) {
+            battleAction.damage = 0
+        }
+    })
+}
+``
+
+- Calling handleEvasion
+
+within the fight button (discussed later in this file), is where we call handleEvasion.  i then use a forEach function to increment the damage variable with all the final damage numbers for the turn.
+
+```
+        handleEvasion(enemy.speed, battleActions)
+        battleActions.forEach((battleAction) => {
+            damage += battleAction.damage
+        })
+```
+
+
+______________________________________________________________________________
+- <b> The battle button </b>
+ ![fightbtn-2](https://user-images.githubusercontent.com/4401398/153112646-951a5ff8-db91-4a0c-a16a-afff9f1a3bc2.svg)
+
+This button does alot, probably way to much as of writing this... 
+this button does: 
+- calculates enemy damage
+- handles chance to miss
+- checks for overkill (if player or enemy health is negative or if a shot will result in a negative number)
+- updates shield
+- resets player and enemy energy
+- updates hp bar style
+
+This button had many iterations, and will continue too. Check commit logs for previous iterations.
+
+```
+    document.querySelector('#battle-btn').addEventListener('click', async () => {
+        let playerElemHp = document.querySelector('#player-hp')
+        let enemyElemHp = document.querySelector('#enemy-hp')
+        let enemyDamage = 0
+        enemyActions = enemy.battleActions()
+
+
+        // Damage that is calculated for evasion (checking for missed shots)
+        handleEvasion(enemy.speed, battleActions)
+        battleActions.forEach((battleAction) => {
+            damage += battleAction.damage
+        })
+   
+        handleEvasion(player.speed, enemyActions)
+        enemyActions.forEach(async (enemyAction) => {
+            enemyDamage += enemyAction.damage       
+        })
+
+        if (enemy.health <= damage) {
+            enemy.health -= damage
+            enemyElemHp.style.setProperty('--enemyHp', '0%')
+            handleWin()
+        } else if (player.health + player.shield <= enemyDamage) {
+            //health number is not exactly right because it does not take into account the players shield
+            player.health -= enemyDamage
+            playerElemHp.style.setProperty('--playerHp', '0%')
+            handleLose()
+        } else {
+            enemy.health -= damage
+            player.health = handleShield(player.health, player.shield, enemyDamage)
+            enemyElemHp.style.setProperty('--enemyHp', enemy.health + '%')
+            await playerElemHp.style.setProperty('--playerHp', player.health + '%')
+            resetAction()
+
+        }
+        player.shield = shieldUpdate(enemyDamage, player)
+        player.speed = 1;
+        player.energy = 5
+        enemy.energy = 5
+        grayscaleChange(player.energy)
+        damage = 0
+        enemyDamage = 0;
+        battleActions = [];
+        //console.log("player health: " + player.health)
+
+    })
+}
+
+```
+
+
+<b> Styles </b>
+
 added custom background and sprites for styling and pizazz!
 
 - Background :
@@ -164,6 +425,11 @@ _____________________________________
 Future Progress:
 
 Next for things to do i would like to:
+- display enemy intentions
+- move the battle button configuration outside of the function it is in
+- switch to using a canvas
+- integrate jquery
+- check win/lose conditions outside of the battle button
 - add animations
 - sound effects
 - more music
