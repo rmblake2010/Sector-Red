@@ -5,11 +5,14 @@ const enemyShip = new Ship('./assets/enemy-assets/enemySprite.svg', 15, 1)
 
 const bgMusic = new Audio('./assets/sound/bump_2.mp3')
 bgMusic.loop = true
-/*
+
 document.querySelector('#background').addEventListener('click', () => {
     bgMusic.play()
 })
-*/
+
+document.querySelector('#background').addEventListener('dblclick', () => {
+    bgMusic.pause()
+})
 
 let enemyHpBar = document.getElementById('enemy-hp')
 let backGround = document.querySelector('#background')
@@ -191,7 +194,7 @@ function actionQueue(player, enemy, damage) {
             grayscaleChange(player.energy)
             console.log("energy " + player.energy)
         } else {
-            console.log('out of energy! hit the battle button!~')
+            //console.log('out of energy! hit the battle button!~')
         }
     })
 
@@ -203,7 +206,7 @@ function actionQueue(player, enemy, damage) {
             grayscaleChange(player.energy)
             actionStyleUpdate(player.energy)
         } else {
-            console.log('out of energy! hit the battle button!~')
+           // console.log('out of energy! hit the battle button!~')
         }
     })
 
@@ -217,7 +220,7 @@ function actionQueue(player, enemy, damage) {
             grayscaleChange(player.energy)
             actionStyleUpdate(player.energy, cost)
         } else {
-            console.log('out of energy! hit the battle button!~')
+            //console.log('out of energy! hit the battle button!~')
         }
     })
 
@@ -231,7 +234,7 @@ function actionQueue(player, enemy, damage) {
             grayscaleChange(player.energy)
             console.log("energy: " + player.energy)
         } else {
-            console.log('out of energy! hit the battle button!~')
+           // console.log('out of energy! hit the battle button!~')
         }
     })
 
@@ -248,22 +251,23 @@ function actionQueue(player, enemy, damage) {
         battleActions.forEach((battleAction) => {
             damage += battleAction.damage
         })
-        console.log("user damage after evasion: " + damage)
+        //console.log("user damage after evasion: " + damage)
 
+        /*
         async function displayIntent(enemyDamage) {             
                 setTimeout(() => {
                     console.log("enemy damage: " + enemyDamage)
                     return 
                 }, 1000)
         }
-
+        */
         handleEvasion(player.speed, enemyActions)
         enemyActions.forEach(async (enemyAction) => {
             enemyDamage += enemyAction.damage
-            await displayIntent(enemyDamage)
+            // await displayIntent(enemyDamage)
         })
 
-        console.log("enemy damage after evasion: " + enemyDamage)
+        //console.log("enemy damage after evasion: " + enemyDamage)
 
 
 
@@ -299,7 +303,7 @@ function actionQueue(player, enemy, damage) {
         damage = 0
         enemyDamage = 0;
         battleActions = [];
-        console.log("player health: " + player.health)
+        //console.log("player health: " + player.health)
 
     })
 }
@@ -323,7 +327,7 @@ function handleEvasion(speed, battleActions) {
 function actionStyleUpdate(currentEnergy, cost) {
     let actions = document.querySelectorAll('.action-slot')
 
-    if (cost === 1) {
+    if (cost >= 1) {
         switch (cost) {
             case 1: actions[currentEnergy + 1].style.backgroundImage = 'url(./assets/UI/batterySlotSpent.svg)'
                 actions[currentEnergy].style.backgroundImage = 'url(./assets/UI/batterySlotSpent.svg)'
