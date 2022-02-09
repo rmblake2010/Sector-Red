@@ -4,6 +4,10 @@ const playerShip = new Ship('./assets/player-assets/ShipSprite.svg', 15, 1)
 const enemyShip = new Ship('./assets/enemy-assets/enemySprite.svg', 15, 1)
 
 const bgMusic = new Audio('./assets/sound/bump_2.mp3')
+const laserBtnSound = new Audio('./assets/sound/laserBtn.mp3')
+const projectileBtnSound = new Audio('./assets/sound/missleBtn.mp3')
+const shieldBtnSound = new Audio('./assets/sound/shieldBtn.mp3')
+const thrusterBtnSound = new Audio('./assets/sound/thrusterBtn.mp3')
 bgMusic.loop = true
 
 document.querySelector('#background').addEventListener('click', () => {
@@ -188,6 +192,7 @@ function actionQueue(player, enemy, damage) {
     //Laser Button Config
     document.querySelector('#laser-btn').addEventListener('click', () => {
         if (player.energy != 0) {
+            laserBtnSound.play()
             player.energy -= 1
             battleActions.push({ damage: player.laserAttack(), energy: 1 })
             actionStyleUpdate(player.energy)
@@ -201,6 +206,7 @@ function actionQueue(player, enemy, damage) {
     //Shield Button Config
     document.querySelector('#shield-btn').addEventListener('click', async () => {
         if (player.energy != 0) {
+            shieldBtnSound.play()
             await player.activateShield()
             player.energy -= 1
             grayscaleChange(player.energy)
@@ -213,6 +219,7 @@ function actionQueue(player, enemy, damage) {
     //Thruster Button config
     document.querySelector('#thruster-btn').addEventListener('click', () => {
         if (player.energy != 0 && player.energy > 1) {
+            thrusterBtnSound.play()
             let cost = 1 
             player.activateThrusters()
             player.energy -= 2
@@ -227,6 +234,7 @@ function actionQueue(player, enemy, damage) {
     //Projectile Button config
     document.querySelector('#projectile-btn').addEventListener('click', () => {
         if (player.energy != 0 && player.energy > 1) {
+            projectileBtnSound.play()
             let cost = 1;
             player.energy -= 2
             battleActions.push({ damage: player.projectileAttack(), energy: 2 })
