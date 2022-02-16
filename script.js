@@ -289,15 +289,9 @@ function actionQueue(player, enemy, damage) {
             playerElemHp.style.setProperty('--playerHp', '0%')
             handleLose()
         } else {
-
-
             enemy.health -= damage
-
-
             // this will be a bug once i make an actual AI
             player.health = handleShield(player.health, player.shield, enemyDamage)
-
-
             enemyElemHp.style.setProperty('--enemyHp', enemy.health + '%')
             await playerElemHp.style.setProperty('--playerHp', player.health + '%')
             resetAction()

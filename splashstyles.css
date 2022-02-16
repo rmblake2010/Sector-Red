@@ -1,0 +1,54 @@
+body{
+    height: 90vh;
+    width: 95vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+   
+    background-color: #333;
+}
+
+
+#start-modal {
+    animation: modalOpen 2s forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px red;
+    text-align: center;
+}
+
+#start-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    min-width: 40%;
+    min-height: 40%;
+    border: solid 1px red;
+}
+
+a {
+    font-size: 2em;
+    color: white;
+}
+
+a:link {
+    text-decoration: none;
+ 
+}
+
+/* Modal Animations */
+
+@keyframes modalOpen {
+    0% {width: 0px; height: 0px;}
+    25% {width: 100px; height: 75px;}
+   /* 50% {width: 200px; height: 150px;} */
+    75% {width: 260px; height: 260px;}
+    100% {width: 250px; height: 250px;}
+}
+
+@keyframes buttonOpen {
+
+}
